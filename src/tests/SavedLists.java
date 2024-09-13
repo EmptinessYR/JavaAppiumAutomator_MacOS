@@ -9,6 +9,10 @@ import org.junit.Test;
 
 public class SavedLists extends CoreTestCase {
 
+    private static final String
+            TITLE_DESCRIPTION_JAVA = "Object-oriented programming language",
+            TITLE_DESCRIPTION_APPIUM = "Automation for Apps";
+
     @Test
     public void testAddAndDeleteListOfArticles()
     {
@@ -16,11 +20,11 @@ public class SavedLists extends CoreTestCase {
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_JAVA);
 
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-        ArticlePageObject.waitForTitleElement("Object-oriented programming language");
-        String article_title = ArticlePageObject.getArticleTitle("Object-oriented programming language");
+        ArticlePageObject.waitForTitleElement(TITLE_DESCRIPTION_JAVA);
+        String article_title = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_JAVA);
         //название созданного списка
         String name_of_list = "Test_list";
         ArticlePageObject.addArticleToMyList(name_of_list);
@@ -40,18 +44,18 @@ public class SavedLists extends CoreTestCase {
         SearchPageObject SearchPageObject = new SearchPageObject(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_JAVA);
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-        ArticlePageObject.waitForTitleElement("Object-oriented programming language");
-        String article_title_to_delete = ArticlePageObject.getArticleTitle("Object-oriented programming language");
+        ArticlePageObject.waitForTitleElement(TITLE_DESCRIPTION_JAVA);
+        String article_title_to_delete = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_JAVA);
         String name_of_list = "Test_list";
         ArticlePageObject.addArticleToMyList(name_of_list);
         ArticlePageObject.closeArticle();
         SearchPageObject.initSearchInputWithoutSkip();
         SearchPageObject.typeSearchLine("Appium");
-        SearchPageObject.clickByArticleWithSubstring("Automation for Apps");
-        ArticlePageObject.waitForTitleElement("Automation for Apps");
-        String article_title_check = ArticlePageObject.getArticleTitle("Automation for Apps");
+        SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_APPIUM);
+        ArticlePageObject.waitForTitleElement(TITLE_DESCRIPTION_APPIUM);
+        String article_title_check = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_APPIUM);
         ArticlePageObject.addArticleToCreatedList(name_of_list);
         ArticlePageObject.closeArticle();
         NavigationUI NavigationUI = new NavigationUI(driver);

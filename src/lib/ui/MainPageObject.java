@@ -6,14 +6,14 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -155,9 +155,37 @@ public class MainPageObject {
                 .perform();
     }
 
+    public void scroll(int timeOfScroll)
+    {
+        Dimension size = driver.manage().window().getSize();
+        int startY = (int) (size.height * 0.70);
+        int endY = (int) (size.height * 0.30);
+        int centerX = size.width / 2;
+
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH,"finger");
+        Sequence swipe = new Sequence(finger,1)
+
+                //Двигаем палец на начальную позицию
+                .addAction(finger.createPointerMove(Duration.ofSeconds(0),
+                        PointerInput.Origin.viewport(), centerX, startY))
+                //Палец прикасается к экрану
+                .addAction(finger.createPointerDown(0))
+
+                //Палец двигается к конечной точке
+                .addAction(finger.createPointerMove(Duration.ofMillis(timeOfScroll),
+                        PointerInput.Origin.viewport(), centerX, endY))
+
+                //Убираем палец с экрана
+                .addAction(finger.createPointerUp(0));
+
+        //Выполняем действия
+        driver.perform(Arrays.asList(swipe));
+    }
+
     public void swipeUpQuick()
     {
-        swipeUp(200);
+        //swipeUp(200);
+        scroll(200);
     }
 
     public void swipeUpToFindElement (String locator, String error_message, int max_swipes)
@@ -176,7 +204,9 @@ public class MainPageObject {
         }
     }
 
-    public void swipeElementToLeft (String locator, String error_message)
+/*    старый метод
+
+        public void swipeElementToLeft (String locator, String error_message)
     {
         WebElement element = waitForElementPresent(
                 locator,
@@ -197,6 +227,44 @@ public class MainPageObject {
                 .release()
                 .perform();
 
+    }*/
+
+    public void swipeElementToLeft(String locator_with_type, String error_message) {
+
+        WebElement element = waitForElementPresent(locator_with_type, error_message, 10);
+
+        Point location = element.getLocation();
+        Dimension size = element.getSize();
+
+        int left_x = location.getX();
+        int right_x = left_x + size.getWidth();
+        int upper_y = location.getY();
+        int lower_y = upper_y + size.getHeight();
+        int middle_y = upper_y + (size.getHeight() / 2);
+
+        int start_x = right_x - 20;
+        int end_x = left_x + 20;
+        int start_y = middle_y;
+        int end_y = middle_y;
+
+        this.swipe(
+                new Point(start_x, start_y),
+                new Point(end_x, end_y),
+                Duration.ofMillis(550)
+        );
+    }
+
+    protected void swipe(Point start, Point end, Duration duration) {
+
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence swipe = new Sequence(finger, 1);
+
+        swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), start.x, start.y));
+        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        swipe.addAction(finger.createPointerMove(duration, PointerInput.Origin.viewport(), end.x, end.y));
+        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+        this.driver.perform(Arrays.asList(swipe));
     }
 
     public int getAmountOfElements (String locator)

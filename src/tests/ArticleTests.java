@@ -7,6 +7,10 @@ import org.junit.Test;
 
 public class ArticleTests extends CoreTestCase {
 
+    private static final String
+            TITLE_DESCRIPTION_JAVA = "Object-oriented programming language",
+            TITLE_DESCRIPTION_APPIUM = "Automation for Apps";
+
     @Test
     public void testCompareArticleTitle()
     {
@@ -14,14 +18,14 @@ public class ArticleTests extends CoreTestCase {
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_JAVA);
 
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-        String article_title = ArticlePageObject.getArticleTitle("Object-oriented programming language");
+        String article_title = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_JAVA);
 
         assertEquals(
                 "We see unexpected title",
-                "Object-oriented programming language",
+                TITLE_DESCRIPTION_JAVA,
                 article_title
         );
     }
@@ -33,10 +37,10 @@ public class ArticleTests extends CoreTestCase {
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Appium");
-        SearchPageObject.clickByArticleWithSubstring("Automation for Apps");
+        SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_APPIUM);
 
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-        ArticlePageObject.waitForTitleElement("Automation for Apps");
+        ArticlePageObject.waitForTitleElement(TITLE_DESCRIPTION_APPIUM);
         ArticlePageObject.swipeToFooter();
     }
 
@@ -47,7 +51,7 @@ public class ArticleTests extends CoreTestCase {
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_JAVA);
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
         ArticlePageObject.assertElementPresentArticleTitleDescription();
     }

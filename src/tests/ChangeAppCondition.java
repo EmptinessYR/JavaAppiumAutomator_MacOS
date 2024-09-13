@@ -8,6 +8,10 @@ import org.junit.Test;
 import java.time.Duration;
 
 public class ChangeAppCondition extends CoreTestCase {
+
+    String TITLE_DESCRIPTION_JAVA = "Object-oriented programming language";
+
+
     @Test
     public void testChangeScreenOrientationSearchResults ()
     {
@@ -15,17 +19,17 @@ public class ChangeAppCondition extends CoreTestCase {
         SearchPageObject.initSearchInput();
         String search_line = "Java";
         SearchPageObject.typeSearchLine(search_line);
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_JAVA);
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
         //Ищем подзаголовок статьи
-        String undertitel_before_rotation = ArticlePageObject.getArticleTitle("Object-oriented programming language");
+        String undertitel_before_rotation = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_JAVA);
         // Вывод значения переменной в консоль
         System.out.println("undertitle before rotation: " + undertitel_before_rotation);
 
         this.rotateScreenLandscape();
 
         //Ищем подзаголовок статьи
-        String undertitel_after_rotation = ArticlePageObject.getArticleTitle("Object-oriented programming language");
+        String undertitel_after_rotation = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_JAVA);
         // Вывод значения переменной в консоль
         System.out.println("undertitle after rotation: " + undertitel_after_rotation);
 
@@ -38,7 +42,7 @@ public class ChangeAppCondition extends CoreTestCase {
         this.rotateScreenPortrait();
 
         //Ищем подзаголовок статьи
-        String undertitel_after_second_rotation = ArticlePageObject.getArticleTitle("Object-oriented programming language");
+        String undertitel_after_second_rotation = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_JAVA);
 
         // Вывод значения переменной в консоль
         System.out.println("undertitle after 2 rotation: " + undertitel_after_second_rotation);
@@ -58,13 +62,13 @@ public class ChangeAppCondition extends CoreTestCase {
         SearchPageObject.initSearchInput();
         String search_line = "Java";
         SearchPageObject.typeSearchLine(search_line);
-        SearchPageObject.waitForSearchResult("Object-oriented programming language");
+        SearchPageObject.waitForSearchResult(TITLE_DESCRIPTION_JAVA);
 
         this.backgroundApp(2);
 
         driver.runAppInBackground(Duration.ofSeconds(2));
 
-        SearchPageObject.waitForSearchResult("Object-oriented programming language");
+        SearchPageObject.waitForSearchResult(TITLE_DESCRIPTION_JAVA);
     }
 
 /*  Тест для истории, todo сдеалать отдельный набор тестов с главной страницей
