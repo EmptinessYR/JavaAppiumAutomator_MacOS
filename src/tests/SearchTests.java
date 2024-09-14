@@ -71,7 +71,7 @@ public class SearchTests extends CoreTestCase {
     }
 
     @Test
-    public void testSearchAndCompareResult ()
+    public void testSearchAndCompareResult ()  //пока не работает на ios так как не понимаю как собрать все названия статей
     {
         SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
         String search_param = "Java";

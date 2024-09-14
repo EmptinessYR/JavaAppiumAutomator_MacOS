@@ -5,6 +5,7 @@ import lib.ui.ArticlePageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SavedObjects;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.ArticlePageObjectFatorie;
 import lib.ui.factories.SearchPageObjectFactorie;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ public class SavedLists extends CoreTestCase {
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_JAVA);
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFatorie.get(driver);
         ArticlePageObject.waitForTitleElement(TITLE_DESCRIPTION_JAVA);
         String article_title = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_JAVA);
         //название созданного списка
@@ -46,7 +47,7 @@ public class SavedLists extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_JAVA);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFatorie.get(driver);
         ArticlePageObject.waitForTitleElement(TITLE_DESCRIPTION_JAVA);
         String article_title_to_delete = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_JAVA);
         String name_of_list = "Test_list";

@@ -3,6 +3,7 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.ArticlePageObjectFatorie;
 import lib.ui.factories.SearchPageObjectFactorie;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class ChangeAppCondition extends CoreTestCase {
         String search_line = "Java";
         SearchPageObject.typeSearchLine(search_line);
         SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_JAVA);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFatorie.get(driver);
         //Ищем подзаголовок статьи
         String undertitel_before_rotation = ArticlePageObject.getArticleTitle(TITLE_DESCRIPTION_JAVA);
         // Вывод значения переменной в консоль

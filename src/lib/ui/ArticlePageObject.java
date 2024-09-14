@@ -1,23 +1,23 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import lib.Platform;
 
-public class ArticlePageObject extends MainPageObject
+abstract public class ArticlePageObject extends MainPageObject
 {
-    private static final String
-        TITLE = "id:pcs-edit-section-title-description",
-        TITLE_XPATH_TPL = "xpath://android.view.View[@content-desc='{TITLE_DESCRIPTION}']",
-        TITLE_TPL = "xpath://android.view.View[@content-desc='{TITLE}']",
-        FOOTER_ELEMENT = "xpath://android.view.View[@content-desc=\"View article in browser\"]",
-        SAVE_BUTTON = "id:org.wikipedia:id/page_save",
-        ADD_TO_LIST_BUTTON = "id:org.wikipedia:id/snackbar_action",
-        MY_LIST_INPUT = "id:org.wikipedia:id/text_input",
-        MY_LIST_OK_BUTTON = "id:android:id/button1",
-        CREATED_LIST_ID = "id:org.wikipedia:id/item_title",
-        TITLE_DESCRIPTION_XPATH = "xpath:id:@resource-id='pcs-edit-section-title-description'",
-        NAVIGATE_UP_BUTTON = "xpath://android.widget.ImageButton[@content-desc=\"Navigate up\"]";
+    protected static String
+        TITLE,
+        TITLE_XPATH_TPL,
+        TITLE_TPL,
+        FOOTER_ELEMENT,
+        SAVE_BUTTON,
+        ADD_TO_LIST_BUTTON,
+        MY_LIST_INPUT,
+        MY_LIST_OK_BUTTON,
+        CREATED_LIST_ID,
+        TITLE_DESCRIPTION_XPATH,
+        NAVIGATE_UP_BUTTON;
 
     public ArticlePageObject(AppiumDriver driver)
     {
@@ -26,7 +26,12 @@ public class ArticlePageObject extends MainPageObject
 
     private static String getTitleDescriptionXpathByTitle (String description_title)
     {
+        if (Platform.getInstance().isAndroid()) {
         return TITLE_XPATH_TPL.replace("{TITLE_DESCRIPTION}", description_title);
+        } else {
+            return TITLE;
+        }
+
     }
 
     public WebElement waitForTitleElement(String title_description)
@@ -38,7 +43,11 @@ public class ArticlePageObject extends MainPageObject
     public String getArticleTitle(String title_description)
     {
         WebElement title_element = waitForTitleElement(title_description);
-        return title_element.getAttribute("content-desc");
+        if (Platform.getInstance().isAndroid()) {
+            return title_element.getAttribute("text");
+        } else {
+            return title_element.getAttribute("name");
+        }
     }
 
     public void swipeToFooter()

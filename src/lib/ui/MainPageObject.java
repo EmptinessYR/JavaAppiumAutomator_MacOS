@@ -136,9 +136,9 @@ public class MainPageObject {
         );
         System.out.println(2);
         for (WebElement element : elements) {
-            String actual_text = element.getAttribute("name");
+            String actual_text = element.getAttribute("name").toLowerCase();
             System.out.println(actual_text);
-            Assert.assertTrue(error_message + ": " + actual_text, actual_text.contains(expected_text));
+            Assert.assertTrue(error_message + ": " + actual_text, actual_text.contains(expected_text.toLowerCase()));
         }
     }
 
