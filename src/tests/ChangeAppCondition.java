@@ -3,6 +3,7 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactorie;
 import org.junit.Test;
 
 import java.time.Duration;
@@ -15,7 +16,7 @@ public class ChangeAppCondition extends CoreTestCase {
     @Test
     public void testChangeScreenOrientationSearchResults ()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
         SearchPageObject.initSearchInput();
         String search_line = "Java";
         SearchPageObject.typeSearchLine(search_line);
@@ -58,7 +59,7 @@ public class ChangeAppCondition extends CoreTestCase {
     @Test
     public void  testCheckSearchArticleInBackGround()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
         SearchPageObject.initSearchInput();
         String search_line = "Java";
         SearchPageObject.typeSearchLine(search_line);

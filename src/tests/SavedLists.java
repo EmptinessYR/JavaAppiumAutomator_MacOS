@@ -5,6 +5,7 @@ import lib.ui.ArticlePageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SavedObjects;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactorie;
 import org.junit.Test;
 
 public class SavedLists extends CoreTestCase {
@@ -16,7 +17,7 @@ public class SavedLists extends CoreTestCase {
     @Test
     public void testAddAndDeleteListOfArticles()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -41,7 +42,7 @@ public class SavedLists extends CoreTestCase {
     @Test
     public void testSaveTwoArticlesInList ()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring(TITLE_DESCRIPTION_JAVA);

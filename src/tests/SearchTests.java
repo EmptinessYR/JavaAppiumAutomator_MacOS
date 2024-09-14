@@ -3,6 +3,7 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactorie;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -10,7 +11,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testSearch() throws InterruptedException
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForSearchResult("Object-oriented programming language");
@@ -19,7 +20,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testCanselSearch ()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -31,7 +32,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testAmountOfNotEmptySearch()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
         SearchPageObject.initSearchInput();
         String search_line = "Linkin Park discography";
         SearchPageObject.typeSearchLine(search_line);
@@ -46,7 +47,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testAmountOfEmptySearch()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
         SearchPageObject.initSearchInput();
         String search_line = "sdafdsgndhgjr";
         SearchPageObject.typeSearchLine(search_line);
@@ -60,7 +61,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testSearchAndCancle ()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -72,7 +73,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testSearchAndCompareResult ()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
         String search_param = "Java";
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine(search_param);
@@ -83,7 +84,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testSearchAndCompareTitleDescription ()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactorie.get(driver);
         String article_title = "Java (programming language)";
         String article_description = "Object-oriented programming language";
         String search_param = "Java";

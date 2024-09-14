@@ -130,13 +130,14 @@ public class MainPageObject {
         By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
-
+        System.out.println(1);
         List<WebElement> elements = wait.until(
                 ExpectedConditions.presenceOfAllElementsLocatedBy(by)
         );
-
+        System.out.println(2);
         for (WebElement element : elements) {
-            String actual_text = element.getText();
+            String actual_text = element.getAttribute("name");
+            System.out.println(actual_text);
             Assert.assertTrue(error_message + ": " + actual_text, actual_text.contains(expected_text));
         }
     }
