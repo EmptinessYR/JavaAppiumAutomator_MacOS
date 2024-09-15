@@ -3,10 +3,10 @@ package lib.ui;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
-public class NavigationUI extends MainPageObject {
+abstract public class NavigationUI extends MainPageObject {
 
-   private static final String
-      SAVED_OBJECTS = "xpath://android.widget.FrameLayout[@content-desc=\"Saved\"]/android.widget.FrameLayout/android.widget.ImageView";
+   protected static String
+      SAVED_OBJECTS;
 
    public NavigationUI (AppiumDriver driver)
    {

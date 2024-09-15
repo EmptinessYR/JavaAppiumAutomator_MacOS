@@ -6,7 +6,7 @@ import lib.ui.ArticlePageObject;
 import lib.ui.android.AndroidArticlePageObject;
 import lib.ui.ios.iOSArticlePageObject;
 
-public class ArticlePageObjectFatorie {
+public class ArticlePageObjectFactorie {
 
     public static ArticlePageObject get(AppiumDriver driver) {
         if (Platform.getInstance().isAndroid()) {

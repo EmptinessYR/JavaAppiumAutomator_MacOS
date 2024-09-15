@@ -1,19 +1,27 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
+import lib.Platform;
 
-public class SavedObjects extends MainPageObject{
+abstract public class SavedObjects extends MainPageObject{
 
-    public static final String
-        LIST_BY_NAME_TPL = "xpath://*[@resource-id='org.wikipedia:id/item_title' and @text='{LIST_NAME}']",
-        ARTICLE_BY_TITLE_TPL = "xpath://*[@text='{TITLE}']",
-        ARTICLE_TITLE_DESCRIPTION_ID = "id:org.wikipedia:id/page_list_item_description";
+    protected static String
+        LIST_BY_NAME_TPL,
+        ARTICLE_BY_TITLE_TPL,
+        ARTICLE_TITLE_DESCRIPTION_ID,
+        CLOSE_SYNC_MESSAGE,
+        READING_LISTS,
+        DELETE_ARTICLE_FROM_LIST_BUTTON;
 
 
     private static String getListXpathByName (String name_of_list)
     {
         return LIST_BY_NAME_TPL.replace("{LIST_NAME}", name_of_list);
+    }
+
+    private static String getListIdByName (String name_of_list)
+    {
+        return LIST_BY_NAME_TPL.replace("{NAME_OF_LIST}", name_of_list);
     }
 
     private static String getSavedArticleXpathByTitle (String article_title)
@@ -61,21 +69,41 @@ public class SavedObjects extends MainPageObject{
         this.waitForArticleToAppearByTitle(article_title);
         String article_title_xpath = getSavedArticleXpathByTitle(article_title);
         System.out.println(article_title_xpath);
-        //Убеждаемся что есть нужная статья
-        this.assertElementHasText(
-                ARTICLE_TITLE_DESCRIPTION_ID,
-                article_title,
-                "Cannot find right article",
-                15
-        );
+        if (Platform.getInstance().isAndroid()) {
+            //Убеждаемся что есть нужная статья
+            this.assertElementHasText(
+                    ARTICLE_TITLE_DESCRIPTION_ID,
+                    article_title,
+                    "Cannot find right article",
+                    15
+            );
 
-        //Свайпаем элемент налево для удаления
-        this.swipeElementToLeft(
-                article_title_xpath,
-                "Cannot find saved article"
-        );
+            //Свайпаем элемент налево для удаления
+            this.swipeElementToLeft(
+                    article_title_xpath,
+                    "Cannot find saved article"
+            );
 
-        this.waitForArticleToDisappearByTitle(article_title);
+            this.waitForArticleToDisappearByTitle(article_title);
+        } else {
+
+            this.assertElementHasText(
+                    ARTICLE_TITLE_DESCRIPTION_ID,
+                    article_title,
+                    "Cannot find right article",
+                    15
+            );
+
+            //Свайпаем элемент налево для удаления
+            this.swipeElementToLeft(
+                    article_title_xpath,
+                    "Cannot find saved article"
+            );
+
+            this.waitForElementAndClick(DELETE_ARTICLE_FROM_LIST_BUTTON, "Cannot find delete article from list button", 5);
+            this.waitForArticleToDisappearByTitle(article_title);
+        }
+
     }
 
     public void swipeByArticleToDelete2 (String article_title) {
@@ -83,6 +111,18 @@ public class SavedObjects extends MainPageObject{
         this.swipeElementToLeft(
                 articleElement,
                 "Cannot find saved article");
+    }
+
+    public void closeMessageAboutSync()
+    {
+        this.waitForElementAndClick(CLOSE_SYNC_MESSAGE, "Cannot find Close button in Sync message", 5);
+    }
+
+    public void goToTargetReadingLists(String name_of_list)
+    {
+        String folder_name_id = getListIdByName(name_of_list);
+        this.waitForElementAndClick(READING_LISTS,"Cannot find Reading lists", 5);
+        this.waitForElementAndClick(folder_name_id,"Cannot find target list", 5);
     }
 
 }
